@@ -168,23 +168,6 @@
  */
 
 
-
-// establish connection
-
-
-// define schema
-
-
-// create document
-
-
-// read document
-
-
-// update document
-
-
-// delete document
 import mongoose from "mongoose";
 
 /* ============================
@@ -197,7 +180,7 @@ async function connectDB() {
         await mongoose.connect(MONGO_URI, {
             // dbName: "labDB",  //
         });
-        console.log("✅ Connected to MongoDB (labDB)");
+        console.log(" Connected to MongoDB (labDB)");
     } catch (err) {
         console.error("❌ MongoDB connection error:", err.message);
         process.exit(1);
@@ -223,7 +206,7 @@ async function createStudents() {
         { name: "Ali", age: 21, major: "CS" },
         { name: "Sara", age: 23, major: "SE" },
     ]);
-    console.log("✅ Inserted");
+    console.log(" Inserted");
 }
 
 /* ============================
@@ -231,7 +214,7 @@ async function createStudents() {
    ============================ */
 async function readStudents() {
     const all = await Student.find();
-    console.log("📘 All students:", all);
+    console.log("All students:", all);
 }
 
 /* ============================
@@ -239,7 +222,7 @@ async function readStudents() {
    ============================ */
 async function updateStudent() {
     await Student.updateOne({ name: "Ali" }, { $set: { age: 22 } });
-    console.log("✅ Updated Ali");
+    console.log("Updated Ali");
 }
 
 /* ============================
@@ -247,22 +230,20 @@ async function updateStudent() {
    ============================ */
 async function deleteStudent() {
     await Student.deleteOne({ name: "Sara" });
-    console.log("✅ Deleted Sara");
+    console.log(" Deleted Sara");
 }
 
-/* ============================
-   Runner
-   ============================ */
+
 (async function main() {
     await connectDB();
 
-    //
+
      await createStudents();
      await readStudents();
      await updateStudent();
      await deleteStudent();
 
-    //
+
      await mongoose.disconnect();
 })();
 
