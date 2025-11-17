@@ -167,7 +167,7 @@
  * 
  */
 
-import mongoose from "mongoose";
+
 
 // establish connection
 
@@ -185,6 +185,86 @@ import mongoose from "mongoose";
 
 
 // delete document
+import mongoose from "mongoose";
+
+/* ============================
+   TODO-1: Establish connection
+   ============================ */
+const MONGO_URI = "mongodb+srv://Afrah_alsubhi:Alharbi711%40%40@cluster0.2vagrja.mongodb.net/labDB\n";
+
+async function connectDB() {
+    try {
+        await mongoose.connect(MONGO_URI, {
+            // dbName: "labDB",  //
+        });
+        console.log("✅ Connected to MongoDB (labDB)");
+    } catch (err) {
+        console.error("❌ MongoDB connection error:", err.message);
+        process.exit(1);
+    }
+}
+
+/* ============================
+   TODO-2: Define the schema
+   ============================ */
+const studentSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    major: String,
+});
+
+const Student = mongoose.model("Student", studentSchema);
+
+/* ============================
+   TODO-3: Create Document
+   ============================ */
+async function createStudents() {
+    await Student.insertMany([
+        { name: "Ali", age: 21, major: "CS" },
+        { name: "Sara", age: 23, major: "SE" },
+    ]);
+    console.log("✅ Inserted");
+}
+
+/* ============================
+   TODO-4: Read Documents
+   ============================ */
+async function readStudents() {
+    const all = await Student.find();
+    console.log("📘 All students:", all);
+}
+
+/* ============================
+   TODO-5: Update Document
+   ============================ */
+async function updateStudent() {
+    await Student.updateOne({ name: "Ali" }, { $set: { age: 22 } });
+    console.log("✅ Updated Ali");
+}
+
+/* ============================
+   TODO-6: Delete Document
+   ============================ */
+async function deleteStudent() {
+    await Student.deleteOne({ name: "Sara" });
+    console.log("✅ Deleted Sara");
+}
+
+/* ============================
+   Runner
+   ============================ */
+(async function main() {
+    await connectDB();
+
+    //
+     await createStudents();
+     await readStudents();
+     await updateStudent();
+     await deleteStudent();
+
+    //
+     await mongoose.disconnect();
+})();
 
 
 
